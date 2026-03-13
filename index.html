@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>How to Make Fresh Lemonade</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --sun: #FFD600;
+      --sun-light: #FFF176;
+      --lime: #8BC34A;
+      --lime-dark: #558B2F;
+      --cream: #FFFDE7;
+      --white: #ffffff;
+      --text: #2E2E1A;
+      --text-muted: #6B6B40;
+      --shadow: rgba(139, 120, 0, 0.15);
+    }
+ 
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+    html { scroll-behavior: smooth; }
+ 
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+ 
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,253,231,0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 2px solid var(--sun);
+      padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 60px;
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      color: var(--lime-dark);
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .nav-logo span { font-size: 1.4rem; }
+    .nav-links { display: flex; gap: 1.8rem; list-style: none; }
+    .nav-links a {
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--lime-dark); }
+ 
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 80px 5vw 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 80% at 70% 50%, #FFF9C4 0%, transparent 70%),
+                  radial-gradient(ellipse 50% 60% at 20% 80%, #DCEDC8 0%, transparent 60%);
+      z-index: 0;
+    }
+    .hero-text { position: relative; z-index: 1; }
+    .hero-badge {
+      display: inline-block;
+      background: var(--lime);
+      color: white;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.35rem 1rem;
+      border-radius: 100px;
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.6s ease both;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--lime-dark);
+    }
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      max-width: 440px;
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+    .hero-cta {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      background: var(--sun);
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      padding: 0.85rem 2rem;
+      border-radius: 100px;
+      box-shadow: 0 4px 20px rgba(255,214,0,0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
+    .hero-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(255,214,0,0.5); }
+ 
+    .hero-visual {
+      position: relative; z-index: 1;
+      display: flex; justify-content: center; align-items: center;
+      animation: floatIn 0.8s 0.2s ease both;
+    }
+    .hero-glass {
+      width: min(380px, 85vw);
+      height: min(480px, 90vw);
+      background: linear-gradient(160deg, rgba(255,249,196,0.9) 0%, rgba(255,236,64,0.6) 40%, rgba(255,214,0,0.4) 100%);
+      border-radius: 30% 30% 40% 40% / 10% 10% 30% 30%;
+      border: 3px solid rgba(255,214,0,0.5);
+      backdrop-filter: blur(4px);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 30px 80px rgba(255,180,0,0.25), inset 0 0 40px rgba(255,255,255,0.3);
+      animation: bob 4s ease-in-out infinite;
+    }
+    .hero-glass::before {
+      content: '';
+      position: absolute; top: 8%; left: 12%; width: 18%; height: 65%;
+      background: rgba(255,255,255,0.45);
+      border-radius: 100px;
+      transform: rotate(-8deg);
+    }
+    .hero-glass::after {
+      content: '🍋';
+      position: absolute; bottom: 15%; right: 12%;
+      font-size: 4rem;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+    }
+    .lemon-slice {
+      position: absolute; top: -30px; right: -30px;
+      width: 130px; height: 130px;
+      background: radial-gradient(circle, #FFF176 30%, #FFD600 60%, #F9A825 100%);
+      border-radius: 50%;
+      border: 4px solid rgba(255,255,255,0.6);
+      box-shadow: 0 8px 30px rgba(255,180,0,0.3);
+      overflow: hidden;
+    }
+    .lemon-slice::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-conic-gradient(rgba(255,255,255,0.3) 0deg 30deg, transparent 30deg 60deg);
+    }
+    .lemon-slice-2 {
+      position: absolute; bottom: 60px; left: -20px;
+      width: 80px; height: 80px;
+      background: radial-gradient(circle, #DCEDC8 30%, #8BC34A 60%, #558B2F 100%);
+      border-radius: 50%;
+      opacity: 0.8;
+    }
+    .bubble { position: absolute; border-radius: 50%; background: rgba(255,255,255,0.6); }
+    .b1 { width:12px; height:12px; top:20%; left:25%; animation: rise 3s 0s infinite; }
+    .b2 { width:8px; height:8px; top:40%; left:55%; animation: rise 3s 0.7s infinite; }
+    .b3 { width:14px; height:14px; top:30%; left:40%; animation: rise 3s 1.4s infinite; }
+ 
+    /* ─── SECTIONS SHARED ─── */
+    section { padding: 6rem 5vw; }
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--lime);
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+    .section-sub {
+      color: var(--text-muted);
+      font-weight: 300;
+      font-size: 1.05rem;
+      line-height: 1.7;
+      max-width: 560px;
+    }
+ 
+    /* reveal animation */
+    .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+ 
+    /* ─── INGREDIENTS ─── */
+    #ingredients { background: white; }
+    .ing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    .ing-card {
+      background: var(--cream);
+      border: 2px solid transparent;
+      border-radius: 20px;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+      cursor: default;
+    }
+    .ing-card:hover {
+      border-color: var(--sun);
+      transform: translateY(-6px);
+      box-shadow: 0 12px 30px var(--shadow);
+    }
+    .ing-emoji { font-size: 3rem; display: block; margin-bottom: 0.75rem; }
+    .ing-name { font-weight: 500; font-size: 1rem; color: var(--text); }
+    .ing-qty { font-size: 0.85rem; color: var(--text-muted); margin-top: 0.3rem; font-weight: 300; }
+    .ing-optional {
+      display: inline-block;
+      background: #E8F5E9;
+      color: var(--lime-dark);
+      font-size: 0.65rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 100px;
+      margin-top: 0.5rem;
+      letter-spacing: 0.05em;
+    }
+ 
+    /* ─── STEPS ─── */
+    #steps { background: var(--cream); }
+    .steps-list { margin-top: 3rem; display: flex; flex-direction: column; gap: 1.5rem; }
+    .step {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 2rem;
+      align-items: start;
+      background: white;
+      border-radius: 20px;
+      padding: 2rem;
+      border-left: 4px solid var(--sun);
+      box-shadow: 0 4px 20px var(--shadow);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .step:hover { transform: translateX(6px); box-shadow: 0 8px 30px var(--shadow); }
+    .step-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      color: var(--sun);
+      line-height: 1;
+      min-width: 50px;
+    }
+    .step-content h3 { font-size: 1.1rem; font-weight: 500; margin-bottom: 0.4rem; }
+    .step-content p { color: var(--text-muted); font-weight: 300; line-height: 1.6; font-size: 0.95rem; }
+ 
+    /* ─── TIPS ─── */
+    #tips {
+      background: linear-gradient(135deg, #558B2F 0%, #8BC34A 100%);
+      color: white;
+    }
+    #tips .section-label { color: rgba(255,255,255,0.6); }
+    #tips .section-title { color: white; }
+    #tips .section-sub { color: rgba(255,255,255,0.75); }
+    .tips-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    .tip-card {
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 20px;
+      padding: 2rem;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .tip-card:hover { background: rgba(255,255,255,0.2); transform: translateY(-4px); }
+    .tip-icon { font-size: 2rem; margin-bottom: 1rem; display: block; }
+    .tip-card h3 { font-size: 1rem; font-weight: 500; margin-bottom: 0.5rem; }
+    .tip-card p { font-size: 0.9rem; color: rgba(255,255,255,0.75); font-weight: 300; line-height: 1.6; }
+ 
+    /* ─── GALLERY ─── */
+    #gallery { background: white; }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.2rem;
+      margin-top: 3rem;
+    }
+    .gallery-item {
+      border-radius: 16px;
+      overflow: hidden;
+      aspect-ratio: 1;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .gallery-item:hover { transform: scale(1.03); box-shadow: 0 16px 40px var(--shadow); }
+    .gallery-item:first-child { grid-column: span 2; aspect-ratio: 2/1; }
+    .gallery-bg {
+      width: 100%; height: 100%;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 0.75rem;
+    }
+    .gallery-bg.g1 { background: linear-gradient(135deg, #FFF9C4, #FFD600); }
+    .gallery-bg.g2 { background: linear-gradient(135deg, #DCEDC8, #8BC34A); }
+    .gallery-bg.g3 { background: linear-gradient(135deg, #FFF8E1, #FFCA28); }
+    .gallery-bg.g4 { background: linear-gradient(135deg, #E8F5E9, #66BB6A); }
+    .gallery-emoji { font-size: clamp(2.5rem, 5vw, 4rem); }
+    .gallery-label {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: rgba(0,0,0,0.5);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+ 
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--text);
+      color: white;
+      text-align: center;
+      padding: 4rem 5vw;
+    }
+    .footer-emoji { font-size: 3rem; margin-bottom: 1rem; display: block; }
+    footer h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      margin-bottom: 0.75rem;
+      color: var(--sun);
+    }
+    footer p { color: rgba(255,255,255,0.55); font-weight: 300; font-size: 0.95rem; }
+    .footer-divider { width: 60px; height: 3px; background: var(--sun); margin: 1.5rem auto; border-radius: 2px; }
+ 
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: none; }
+    }
+    @keyframes floatIn {
+      from { opacity: 0; transform: translateX(60px) scale(0.9); }
+      to { opacity: 1; transform: none; }
+    }
+    @keyframes bob {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-14px); }
+    }
+    @keyframes rise {
+      0% { transform: translateY(0); opacity: 0.6; }
+      100% { transform: translateY(-200px); opacity: 0; }
+    }
+ 
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      .hero { grid-template-columns: 1fr; text-align: center; padding-top: 90px; }
+      .hero p { margin: 0 auto 2.5rem; }
+      .hero-cta { align-self: center; }
+      .hero-visual { margin-top: 2.5rem; }
+      .nav-links { display: none; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; }
+      .gallery-item:first-child { grid-column: span 2; }
+    }
+  </style>
+</head>
+<body>
+ 
+<!-- NAV -->
+<nav>
+  <div class="nav-logo"><span>🍋</span> Lemonade</div>
+  <ul class="nav-links">
+    <li><a href="#ingredients">Ingredients</a></li>
+    <li><a href="#steps">Steps</a></li>
+    <li><a href="#tips">Tips</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+  </ul>
+</nav>
+ 
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <span class="hero-badge">☀️ Summer Recipe</span>
+    <h1>How to Make<br /><em>Fresh Lemonade</em></h1>
+    <p>Nothing beats a tall, ice-cold glass of homemade lemonade on a warm day. Simple ingredients, five minutes, and pure refreshment — every single time.</p>
+    <a href="#ingredients" class="hero-cta">Get Started ↓</a>
+  </div>
+  <div class="hero-visual">
+    <div style="position:relative; display:inline-block;">
+      <div class="lemon-slice"></div>
+      <div class="hero-glass">
+        <div class="bubble b1"></div>
+        <div class="bubble b2"></div>
+        <div class="bubble b3"></div>
+      </div>
+      <div class="lemon-slice-2"></div>
+    </div>
+  </div>
+</section>
+ 
+<!-- INGREDIENTS -->
+<section id="ingredients">
+  <div class="reveal">
+    <div class="section-label">What you'll need</div>
+    <h2 class="section-title">Ingredients</h2>
+    <p class="section-sub">Fresh, simple, and easy to find — everything you need for the perfect glass of lemonade.</p>
+  </div>
+  <div class="ing-grid reveal">
+    <div class="ing-card">
+      <span class="ing-emoji">🍋</span>
+      <div class="ing-name">Lemons</div>
+      <div class="ing-qty">4–6 fresh lemons</div>
+    </div>
+    <div class="ing-card">
+      <span class="ing-emoji">🍬</span>
+      <div class="ing-name">Sugar</div>
+      <div class="ing-qty">½ cup</div>
+    </div>
+    <div class="ing-card">
+      <span class="ing-emoji">💧</span>
+      <div class="ing-name">Water</div>
+      <div class="ing-qty">4 cups cold water</div>
+    </div>
+    <div class="ing-card">
+      <span class="ing-emoji">🧊</span>
+      <div class="ing-name">Ice Cubes</div>
+      <div class="ing-qty">Generously</div>
+    </div>
+    <div class="ing-card">
+      <span class="ing-emoji">🌿</span>
+      <div class="ing-name">Mint Leaves</div>
+      <div class="ing-qty">A few sprigs</div>
+      <span class="ing-optional">Optional</span>
+    </div>
+  </div>
+</section>
+ 
+<!-- STEPS -->
+<section id="steps">
+  <div class="reveal">
+    <div class="section-label">The Method</div>
+    <h2 class="section-title">Step-by-Step Instructions</h2>
+    <p class="section-sub">Follow these simple steps for a perfectly balanced, refreshingly tart lemonade.</p>
+  </div>
+  <div class="steps-list">
+    <div class="step reveal">
+      <div class="step-num">01</div>
+      <div class="step-content">
+        <h3>Wash and Cut the Lemons</h3>
+        <p>Rinse your lemons under cool water, scrubbing gently. Roll them on the counter with your palm to loosen the juice inside, then slice each in half.</p>
+      </div>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">02</div>
+      <div class="step-content">
+        <h3>Squeeze the Lemon Juice</h3>
+        <p>Using a citrus juicer or your hands, squeeze the juice from all lemons into a large bowl or pitcher. Aim for about ¾ cup of fresh juice.</p>
+      </div>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">03</div>
+      <div class="step-content">
+        <h3>Add Sugar and Mix Well</h3>
+        <p>Add the sugar directly to the lemon juice while it's at its most acidic — this helps it dissolve faster. Stir vigorously until no granules remain.</p>
+      </div>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">04</div>
+      <div class="step-content">
+        <h3>Pour in Cold Water and Stir</h3>
+        <p>Add 4 cups of cold water to your lemon-sugar mixture. Stir well to combine everything into a smooth, balanced lemonade base.</p>
+      </div>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">05</div>
+      <div class="step-content">
+        <h3>Add Ice Cubes and Mint Leaves</h3>
+        <p>Fill glasses generously with ice cubes. If using mint, lightly press the leaves between your fingers first to release their aroma, then add to the glass.</p>
+      </div>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">06</div>
+      <div class="step-content">
+        <h3>Serve Chilled 🎉</h3>
+        <p>Pour lemonade over the ice, garnish with a lemon slice on the rim, and enjoy immediately. Best served on a warm sunny day!</p>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- TIPS -->
+<section id="tips">
+  <div class="reveal">
+    <div class="section-label">Pro Advice</div>
+    <h2 class="section-title">Tips for the Best Lemonade</h2>
+    <p class="section-sub" style="color:rgba(255,255,255,0.75)">Small details make a big difference. Here's what the experts know.</p>
+  </div>
+  <div class="tips-grid reveal">
+    <div class="tip-card">
+      <span class="tip-icon">🍋</span>
+      <h3>Use Fresh Lemons</h3>
+      <p>Bottled juice simply can't compete. Fresh lemons bring a brightness and complexity that makes every sip taste alive.</p>
+    </div>
+    <div class="tip-card">
+      <span class="tip-icon">🍯</span>
+      <h3>Adjust the Sweetness</h3>
+      <p>Sugar is personal. Start with less, taste, and add more gradually. You can also swap for honey or a simple syrup for a smoother sweetness.</p>
+    </div>
+    <div class="tip-card">
+      <span class="tip-icon">❄️</span>
+      <h3>Chill Before Serving</h3>
+      <p>For a party-perfect pitcher, make the lemonade base ahead and refrigerate for at least an hour. The flavors meld beautifully when cold.</p>
+    </div>
+  </div>
+</section>
+ 
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="reveal">
+    <div class="section-label">Visual Guide</div>
+    <h2 class="section-title">Gallery</h2>
+    <p class="section-sub">A visual walk-through of the lemonade-making journey.</p>
+  </div>
+  <div class="gallery-grid reveal">
+    <div class="gallery-item">
+      <div class="gallery-bg g1">
+        <span class="gallery-emoji">🍋🍋🍋</span>
+        <span class="gallery-label">Fresh Lemons</span>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-bg g2">
+        <span class="gallery-emoji">🥣</span>
+        <span class="gallery-label">Squeezing Juice</span>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-bg g3">
+        <span class="gallery-emoji">🥄</span>
+        <span class="gallery-label">Mixing It Up</span>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-bg g4">
+        <span class="gallery-emoji">🥤</span>
+        <span class="gallery-label">Final Drink</span>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- FOOTER -->
+<footer>
+  <span class="footer-emoji">🍋</span>
+  <h2>Enjoy your refreshing homemade lemonade!</h2>
+  <div class="footer-divider"></div>
+  <p>Made with sunshine &amp; fresh lemons · Share the joy of a perfect glass</p>
+</footer>
+ 
+<script>
+  // Intersection Observer for scroll reveals
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        // stagger children a bit
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+ 
+  reveals.forEach(el => observer.observe(el));
+ 
+  // stagger step reveals
+  document.querySelectorAll('.step.reveal').forEach((el, i) => {
+    el.style.transitionDelay = `${i * 80}ms`;
+  });
+</script>
+</body>
+</html>
